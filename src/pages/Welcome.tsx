@@ -1,28 +1,50 @@
 import React from 'react';
-import { SafeAreaView, Text, Image, TouchableOpacity, StyleSheet, Platform, StatusBar } from 'react-native';
+import { 
+  View,
+  SafeAreaView,
+  Text,
+  Image,
+  TouchableOpacity,
+  StyleSheet,
+  Platform,
+  StatusBar,
+  Dimensions
+} from 'react-native';
+
+import { Feather } from '@expo/vector-icons';
 
 import wateringImg from '../assets/watering.png';
 import colors from '../styles/colors';
+import fonts from '../styles/fonts';
 
 export default function Welcome() {
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>
-        Gerencie {'\n'}
-        suas plantas de {'\n'}
-        forma fácil
-      </Text>
+      <View style={styles.wrapper}>
+        <Text style={styles.title}>
+          Gerencie {'\n'}
+          suas plantas de {'\n'}
+          forma fácil
+        </Text>
 
-      <Image source={wateringImg} style={styles.image} />
+        <Image
+          source={wateringImg}
+          style={styles.image}
+          resizeMode='contain'
+        />
 
-      <Text style={styles.subtitle}>
-        Não esqueça mais de regar suas plantas. Nós cuidamos de lembrar você
-        sempre que precisar.
-      </Text>
+        <Text style={styles.subtitle}>
+          Não esqueça mais de regar suas plantas. Nós cuidamos de lembrar você
+          sempre que precisar.
+        </Text>
 
-      <TouchableOpacity style={styles.button} activeOpacity={0.7}>
-        <Text style={styles.buttonText}> { '>' } </Text>
-      </TouchableOpacity>
+        <TouchableOpacity style={styles.button} activeOpacity={0.7}>
+          <Feather
+            name="chevron-right"
+            style={styles.buttonIcon}
+          />
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
   )
 }
@@ -30,28 +52,34 @@ export default function Welcome() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+
+  wrapper: {
+    flex: 1,
     alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0
+    justifyContent: 'space-around',
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+    paddingHorizontal: 20
   },
 
   title: {
-    fontSize: 32,
-    fontWeight: 'bold',
+    fontSize: 28,
     textAlign: 'center',
     color: colors.heading,
-    marginTop: 38
+    marginTop: 38,
+    fontFamily: fonts.heading,
+    lineHeight: 34
   },
 
   image: {
-    width: 292,
-    height: 284
+    height: Dimensions.get('window').width * 0.7
   },
 
   subtitle: {
     textAlign: 'center',
     paddingHorizontal: 20,
     color: colors.heading,
+    fontFamily: fonts.text
   },
 
   button: {
@@ -59,13 +87,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 16,
-    marginBottom: 50,
+    marginBottom: 10,
     height: 56,
     width: 56,
   },
 
-  buttonText: {
+  buttonIcon: {
+    fontSize: 32,
     color: colors.white,
-    fontSize: 24
   }
 })
