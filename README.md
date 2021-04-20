@@ -1,0 +1,1 @@
+plant manager is an application developed in react native that helps in the organization and care of your plants. That's NLW # 5
