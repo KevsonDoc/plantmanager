@@ -4,13 +4,18 @@ import { Text, TouchableOpacity, TouchableOpacityProps, StyleSheet } from 'react
 import colrs from '../styles/colors';
 import fonts from '../styles/fonts';
 
-interface ButtonProps extends TouchableOpacityProps {}
+interface ButtonProps extends TouchableOpacityProps {
+  title: string;
+}
 
-const Button: React.FC = () => {
+const Button: React.FC<ButtonProps> = ({ title, ...rest }) => {
   return (
-    <TouchableOpacity style={styles.container}>
+    <TouchableOpacity
+      style={styles.container}
+      {...rest}
+    >
       <Text style={styles.text}>
-        Confirmar
+        { title }
       </Text>
     </TouchableOpacity>
   );
