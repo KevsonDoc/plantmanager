@@ -22,26 +22,30 @@ const UserIdentification: React.FC = () => {
   const [ isFocused, setIsFocused ] = useState(false);
   const [ isFilled, setiIsFilled ] = useState(false);
   const [ name, setName ] = useState<string>();
+  const [ nameError, setNameError ] = useState(false);
 
   const navigation = useNavigation()
 
 
   function handleInputBlur() {
     setIsFocused(false);
+    setNameError(false)
   }
   function handleInputFocus() {
     setIsFocused(true);
+    setNameError(false)
   }
 
   function handleInputChange(value: string) {
     setIsFocused(!!value);
     setName(value);
-    setiIsFilled(!!value)
+    setiIsFilled(!!value);
+    nameError === true ? setNameError(false) : null;
   }
 
   
   function handleSubmit() {
-    navigation.navigate('Confirmation');
+    name ? navigation.navigate('Confirmation') : setNameError(true);
   }
 
   return (
@@ -65,7 +69,8 @@ const UserIdentification: React.FC = () => {
               <TextInput
                 style={[
                   styles.input,
-                  (isFocused || isFilled) && { borderColor: colors.green }
+                  (isFocused || isFilled) && { borderColor: colors.green },
+                  nameError === true && {  borderColor: colors.red } 
                 ]}
                 placeholder='Digite seu nome'
                 onBlur={handleInputBlur}
