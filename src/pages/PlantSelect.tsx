@@ -7,6 +7,7 @@ import {
   FlatList,
   ActivityIndicator
 } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 import EnvironmentButon from '../components/EnviromentButon';
 import Header from '../components/Header';
@@ -44,7 +45,8 @@ const PlantSelect: React.FC = () => {
   
   const [ page, setPage ] = useState(1);
   const [ loadingMore, setLoadingMore ] = useState(false);
-  const [ loadedAll, setLoadedAll ] = useState(false);
+  const navigation = useNavigation();
+
 
   function handleEnviromentSelected(enviroment: string) {
     setEviromentSelected(enviroment);
@@ -83,6 +85,9 @@ const PlantSelect: React.FC = () => {
     setPage(oldValue => oldValue + 1);
     fetchPlants();
   }
+  function handlePlantSelect(plant: PlantsProps) {
+    navigation.navigate('PlantSave', {plant});
+  }
 
   useEffect(() => {
     async function fetchEnviroment() {
@@ -120,6 +125,8 @@ const PlantSelect: React.FC = () => {
           data={enviroments}
           showsHorizontalScrollIndicator={false}
           horizontal
+          keyExtractor={item => item.key.toString()}
+
           renderItem={({ item }) => (
             <EnvironmentButon
               title={item.title}
@@ -141,7 +148,10 @@ const PlantSelect: React.FC = () => {
           numColumns={2}
           keyExtractor={item => item.id.toString()}
           renderItem={({ item }) => (
-            <PlantCardPrimary data={item} key={item.id} />
+            <PlantCardPrimary
+              data={item}
+              key={item.id}
+              onPress={() => {handlePlantSelect(item)}} />
           )}
           ListFooterComponent={
             loadingMore ? <ActivityIndicator color={colors.green} /> : <></>
