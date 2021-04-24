@@ -8,6 +8,7 @@ import {
   ActivityIndicator
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { PlantProps } from '../libs/sotrage';
 
 import EnvironmentButon from '../components/EnviromentButon';
 import Header from '../components/Header';
@@ -23,23 +24,10 @@ interface EnviromentsProps {
   title: string;
 }
 
-interface PlantsProps {
-  id: string;
-  name: string;
-  about: string;
-  water_tips: string;
-  photo: string;
-  environments: [string];
-  frequency: {
-    times: number;
-    repeat_every: string;
-  }
-}
-
 const PlantSelect: React.FC = () => {
   const [ enviroments, setEnviroments ] = useState<EnviromentsProps[]>([]);
-  const [ plants, setPlants ] = useState<PlantsProps[]>([]);
-  const [ filteredPlants, setFilteredPlants ] = useState<PlantsProps[]>([]);
+  const [ plants, setPlants ] = useState<PlantProps[]>([]);
+  const [ filteredPlants, setFilteredPlants ] = useState<PlantProps[]>([]);
   const [ enviromentSelected, setEviromentSelected ] = useState<string>('all');
   const [ loading, setLoading ] = useState(true);
   
@@ -85,7 +73,7 @@ const PlantSelect: React.FC = () => {
     setPage(oldValue => oldValue + 1);
     fetchPlants();
   }
-  function handlePlantSelect(plant: PlantsProps) {
+  function handlePlantSelect(plant: PlantProps) {
     navigation.navigate('PlantSave', {plant});
   }
 

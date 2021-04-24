@@ -49,8 +49,18 @@ const UserIdentification: React.FC = () => {
     if(!name)
       return Alert.alert('Me diz como chamar você 😪');
     
-    await AsyncStorage.setItem('@plantmanager:user', name);
-     navigation.navigate('Confirmation');
+    try {
+      await AsyncStorage.setItem('@plantmanager:user', name);
+      navigation.navigate('Confirmation', {
+        title: 'Prontinho',
+        subtitle: 'Agora vamos começar a cuidar das suas plantinhas com muito cuidado.',
+        buttonTitle: 'Começar',
+        nextScreen: 'PlantSelect',
+        ico: 'smile'
+      });
+    } catch (error) {
+      return Alert.alert('Ops! Houve um erro estamos trabalhando para resolve-lo 😪');
+    }
   }
 
   return (
