@@ -24,7 +24,6 @@ const MyPlants: React.FC = () => {
   const [ loading, setLoading ] = useState(true);
   const [ nextWatered, setNextWtaered ] = useState<string>();
 
-
   function handleRemove(plant: PlantProps) {
     Alert.alert('Remover',`Deseja remover a ${plant.name}?`, [
       {
@@ -53,11 +52,18 @@ const MyPlants: React.FC = () => {
     async function loadStorageData() {
       const plantStoraged = await loadPlant();
 
+      if (plantStoraged.length === 0) {
+        setLoading(false);
+
+        return setNextWtaered(`Nenhuma planta agendada`)
+      }
+
       const nextTime = formatDistance(
         new Date(plantStoraged[0].dateTimeNotification).getTime(),
         new Date().getTime(),
-        { locale: pt }  
+        { locale: pt }
       );
+
 
       setNextWtaered(`Não esqueça de regar a ${plantStoraged[0].name} à ${nextTime} horas`)
 
